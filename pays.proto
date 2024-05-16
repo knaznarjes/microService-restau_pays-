@@ -1,0 +1,62 @@
+syntax = "proto3"; // Utilisation de la syntaxe Proto3
+package pays;
+
+// Définition des messages pour les pays
+message Pays {
+  string id = 1; // Identifiant du pays
+  string nom = 2; // Nom du pays
+  int32 nbRestau = 3; // Nombre de restaurants dans le pays
+  string nomRestau = 4; // Nom du restaurant principal
+}
+
+message GetPaysRequest {
+  string pays_id = 1; // Identifiant du pays
+}
+
+message GetPaysResponse {
+  Pays pays = 1; // Pays trouvé
+}
+
+message SearchPaysRequest {} // Demande de recherche de tous les pays
+
+message SearchPaysResponse {
+  repeated Pays pays = 1; // Liste des pays
+}
+
+message CreatePaysRequest {
+  string nom = 1; // Nom du pays
+  int32 nbRestau = 2; // Nombre de restaurants
+  string nomRestau = 3; // Nom du restaurant principal
+}
+
+message CreatePaysResponse {
+  Pays pays = 1; // Pays créé
+}
+
+message DeletePaysRequest { // Demande de suppression du pays
+  string pays_id = 1; // Identifiant du pays à supprimer
+}
+
+message DeletePaysResponse { // Réponse à la suppression
+  string message = 1; // Message de confirmation
+}
+
+message UpdatePaysRequest {
+  string pays_id = 1; // Identifiant du pays à mettre à jour
+  string nom = 2; // Nouveau nom du pays
+  int32 nbRestau = 3; // Nouveau nombre de restaurants
+  string nomRestau = 4; // Nouveau nom du restaurant principal
+}
+
+message UpdatePaysResponse {
+  Pays pays = 1; // Pays mis à jour
+}
+
+// Service Pays avec des opérations CRUD complètes
+service PaysService {
+  rpc GetPays(GetPaysRequest) returns (GetPaysResponse); // Obtenir un pays par ID
+  rpc SearchPays(SearchPaysRequest) returns (SearchPaysResponse); // Obtenir tous les pays
+  rpc CreatePays(CreatePaysRequest) returns (CreatePaysResponse); // Créer un pays
+  rpc DeletePays(DeletePaysRequest) returns (DeletePaysResponse); // Supprimer un pays par ID
+  rpc UpdatePays(UpdatePaysRequest) returns (UpdatePaysResponse); // Mettre à jour un pays par ID
+}

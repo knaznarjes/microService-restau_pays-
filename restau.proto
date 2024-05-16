@@ -1,0 +1,62 @@
+syntax = "proto3"; // Utiliser la syntaxe Proto3
+package restau;
+
+// Définition des messages pour les restaurants
+message Restau {
+  string id = 1; // Identifiant du restaurant
+  string nom = 2; // Nom du restaurant
+  int32 nombre = 3; // Nombre de sièges
+  string locale = 4; // Localisation du restaurant
+}
+
+message GetRestauRequest {
+  string restau_id = 1; // Identifiant du restaurant
+}
+
+message GetRestauResponse {
+  Restau restau = 1; // Restaurant trouvé
+}
+
+message SearchRestausRequest {} // Demande de recherche de tous les restaurants
+
+message SearchRestausResponse {
+  repeated Restau restaus = 1; // Liste des restaurants
+}
+
+message CreateRestauRequest {
+  string nom = 1; // Nom du restaurant
+  int32 nombre = 2; // Nombre de sièges
+  string locale = 3; // Localisation du restaurant
+}
+
+message CreateRestauResponse {
+  Restau restau = 1; // Restaurant créé
+}
+
+message DeleteRestauRequest {
+  string restau_id = 1; // Identifiant du restaurant à supprimer
+}
+
+message DeleteRestauResponse {
+  string message = 1; // Message de confirmation de suppression
+}
+
+message UpdateRestauRequest { // Demande de mise à jour du restaurant
+  string restau_id = 1; // ID du restaurant
+  string nom = 2; // Nouveau nom
+  int32 nombre = 3; // Nouveau nombre de sièges
+  string locale = 4; // Nouvelle localisation
+}
+
+message UpdateRestauResponse { // Réponse à la mise à jour
+  Restau restau = 1; // Restaurant mis à jour
+}
+
+// Service Restau avec toutes les opérations CRUD
+service RestauService {
+  rpc GetRestau(GetRestauRequest) returns (GetRestauResponse); // Obtenir un restaurant par ID
+  rpc SearchRestaus(SearchRestausRequest) returns (SearchRestausResponse); // Obtenir tous les restaurants
+  rpc CreateRestau(CreateRestauRequest) returns (CreateRestauResponse); // Créer un restaurant
+  rpc DeleteRestau(DeleteRestauRequest) returns (DeleteRestauResponse); // Supprimer un restaurant par ID
+  rpc UpdateRestau(UpdateRestauRequest) returns (UpdateRestauResponse); // Mettre à jour un restaurant par ID
+}
